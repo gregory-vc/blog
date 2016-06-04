@@ -46,13 +46,14 @@
       - SSH_USER=gregory
       - SSH_PASSWORD=root
       - SSH_PORT=22
-    volumes: ['./../services/Gate:/home/gregory/gate/']
+    volumes: ['../Services/Gate:/home/gregory/source/Gate/']
 
 # php for `Gate`
 'php_gate':
     build: 'php'
     container_name: 'php_gate'
     volumes_from: ['source_gate']
+    volumes: ['./logs/php/gate/:/var/log/dev_php']
 
 # nginx for `Gate`
 'nginx_gate':

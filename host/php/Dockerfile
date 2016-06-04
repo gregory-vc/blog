@@ -1,13 +1,13 @@
-FROM php:7.0.3-fpm
+FROM php:7.0.7-fpm
 MAINTAINER Gregory Vorozhtcov
 
-RUN mkdir /home/carprice/
-RUN useradd carprice
-RUN usermod -u 1033 -s /bin/bash carprice
-RUN groupmod -g 1033 carprice
-RUN usermod -d /home/carprice/source/ carprice
-RUN chown -R carprice:carprice /home/carprice
-WORKDIR /home/carprice/source/
+RUN mkdir /home/gregory/
+RUN useradd gregory
+RUN usermod -u 1033 -s /bin/bash gregory
+RUN groupmod -g 1033 gregory
+RUN usermod -d /home/gregory/source/ gregory
+RUN chown -R gregory:gregory /home/gregory
+WORKDIR /home/gregory/source/
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -53,7 +53,7 @@ RUN php -r "unlink('composer-setup.php');"
 RUN curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept
 RUN chmod a+x /usr/local/bin/codecept
 
-RUN sed -i -e "s/www-data/carprice/g" /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i -e "s/www-data/gregory/g" /usr/local/etc/php-fpm.d/www.conf
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN mkdir /var/log/dev_php/
