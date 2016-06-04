@@ -46,7 +46,7 @@
       - SSH_USER=gregory
       - SSH_PASSWORD=root
       - SSH_PORT=22
-    volumes: ['../Services/Gate:/home/gregory/source/Gate/']
+    volumes: ['../Services/Gate:/home/gregory/source/']
 
 # php for `Gate`
 'php_gate':
@@ -66,3 +66,69 @@
       - PHP_HOST=php_gate
       - NGINX_HOST_TEMPLATE=gate.blog
     volumes: ['./logs/nginx/gate/:/var/log/nginx']
+
+##########################################
+# Service `Post 1`
+##########################################
+
+# source code storage for `Post 1`
+'source_post_1':
+    build: 'source'
+    container_name: 'source_post_1'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Post:/home/gregory/source/']
+
+# php for `Post 1`
+'php_post_1':
+    build: 'php'
+    container_name: 'php_post_1'
+    volumes_from: ['source_post_1']
+    volumes: ['./logs/php/post_1/:/var/log/dev_php']
+
+# nginx for `Post 1`
+'nginx_post_1':
+    build: 'nginx'
+    container_name: 'nginx_post_1'
+    links: ['php_post_1']
+    volumes_from: ['source_post_1']
+    ports: ['30002:80']
+    environment:
+      - PHP_HOST=php_post_1
+      - NGINX_HOST_TEMPLATE=post.blog
+    volumes: ['./logs/nginx/post_1/:/var/log/nginx']
+
+##########################################
+# Service `Post 2`
+##########################################
+
+# source code storage for `Post 2`
+'source_post_2':
+    build: 'source'
+    container_name: 'source_post_2'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Post:/home/gregory/source/']
+
+# php for `Post 2`
+'php_post_2':
+    build: 'php'
+    container_name: 'php_post_2'
+    volumes_from: ['source_post_2']
+    volumes: ['./logs/php/post_2/:/var/log/dev_php']
+
+# nginx for `Post 2`
+'nginx_post_2':
+    build: 'nginx'
+    container_name: 'nginx_post_2'
+    links: ['php_post_2']
+    volumes_from: ['source_post_2']
+    ports: ['30003:80']
+    environment:
+      - PHP_HOST=php_post_2
+      - NGINX_HOST_TEMPLATE=post.blog
+    volumes: ['./logs/nginx/post_2/:/var/log/nginx']
