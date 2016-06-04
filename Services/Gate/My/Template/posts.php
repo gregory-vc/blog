@@ -1,0 +1,3 @@
+echo echo
+
+<?=$data['data']?>

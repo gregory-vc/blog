@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd host && docker-compose build && docker-compose up -d && docker-compose ps
+docker exec php_gate /bin/bash -c "cd Gate && composer install"
