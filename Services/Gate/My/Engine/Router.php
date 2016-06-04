@@ -37,9 +37,10 @@ class Router {
         $current_map = $this->map[$this->request->request_method];
 
         if (empty($current_map[$this->request->uri])) {
-            http_response_code(404);
+            $current_route = $current_map['/404'];
+        } else {
+            $current_route = $current_map[$this->request->uri];
         }
-        $current_route = $current_map[$this->request->uri];
         $this->request->setRoute($current_route);
         return $this->request;
     }

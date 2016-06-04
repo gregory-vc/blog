@@ -20,9 +20,14 @@ class Response {
     }
 
     public function html($name, $data) {
-        $this->template_path .= $name.'.php';
+        $controller_template = $this->template_path.$name.'.php';
+        $layout_template = $this->template_path.'layout.php';
         ob_start();
-        require_once($this->template_path);
+        require_once($controller_template);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        ob_start();
+        require_once($layout_template);
         $contents = ob_get_contents();
         ob_end_clean();
         $this->content = $contents;
