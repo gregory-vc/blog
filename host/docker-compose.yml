@@ -1,0 +1,67 @@
+##########################################
+# Global containers
+##########################################
+
+# phpmyadmin for admin database
+'phpmyadmin':
+    image: 'nazarpc/phpmyadmin:latest'
+    container_name: 'phpmyadmin'
+    environment: [ALLOW_ARBITRARY=1]
+    restart: always
+    links: ['mysql_auth', 'mysql_blog']
+    ports: ['30000:80']
+
+# database for service `auth`
+'mysql_auth':
+    image: 'mysql:5.6.26'
+    container_name: 'mysql_auth'
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    volumes: [/var/lib/mysql]
+
+# database for service `Comment` and `Post`
+'mysql_blog':
+    image: 'mysql:5.6.26'
+    container_name: 'mysql_blog'
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    volumes: [/var/lib/mysql]
+
+# redis for fast cache
+'redis':
+    image: 'redis'
+    container_name: 'redis'
+
+##########################################
+# Service `Gate`
+##########################################
+
+# source code storage for `gate`
+'source_gate':
+    build: 'source'
+    container_name: 'source_gate'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['./../services/Gate:/home/gregory/gate/']
+
+# php for `Gate`
+'php_gate':
+    build: 'php'
+    container_name: 'php_gate'
+    volumes_from: ['source_gate']
+
+# nginx for `Gate`
+'nginx_gate':
+    build: 'nginx'
+    container_name: 'nginx_gate'
+    links: ['php_gate']
+    volumes_from: ['source_gate']
+    ports: ['30001:80']
+    environment:
+      - PHP_HOST=php_gate
+      - NGINX_HOST_TEMPLATE=gate.blog
+    volumes: ['./logs/nginx/gate/:/var/log/nginx']
