@@ -1,4 +1,4 @@
-<h1>List all post of node <?=htmlspecialchars($data['node'])?></h1>
+<h1>List all post by node <?=htmlspecialchars($data['node'])?></h1>
 <a href="/post/add/">[ Add post ]</a>
 <?php
     foreach ($data['content'] as $post) {
