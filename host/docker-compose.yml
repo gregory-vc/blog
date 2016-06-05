@@ -56,6 +56,14 @@
     container_name: 'php_gate'
     volumes_from: ['source_gate']
     volumes: ['./logs/php/gate/:/var/log/dev_php']
+    links:
+      - nginx_post_1:post1.blog
+      - nginx_post_2:post2.blog
+    environment:
+      - POST_1_HOST=post1.blog
+      - POST_1_PORT=80
+      - POST_2_HOST=post2.blog
+      - POST_2_PORT=80
 
 # nginx for `Gate`
 'nginx_gate':
@@ -94,6 +102,7 @@
       - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
       - PDO_USER=root
       - PDO_PASSWORD=root
+      - NODE=post_1
 
 # nginx for `Post 1`
 'nginx_post_1':
@@ -104,7 +113,7 @@
     ports: ['30002:80']
     environment:
       - PHP_HOST=php_post_1
-      - NGINX_HOST_TEMPLATE=post.blog
+      - NGINX_HOST_TEMPLATE=post1.blog
     volumes: ['./logs/nginx/post_1/:/var/log/nginx']
 
 ##########################################
@@ -132,6 +141,7 @@
       - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
       - PDO_USER=root
       - PDO_PASSWORD=root
+      - NODE=post_2
 
 # nginx for `Post 2`
 'nginx_post_2':
@@ -142,5 +152,5 @@
     ports: ['30003:80']
     environment:
       - PHP_HOST=php_post_2
-      - NGINX_HOST_TEMPLATE=post.blog
+      - NGINX_HOST_TEMPLATE=post2.blog
     volumes: ['./logs/nginx/post_2/:/var/log/nginx']

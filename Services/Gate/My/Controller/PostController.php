@@ -4,6 +4,7 @@ namespace My\Controller;
 
 use My\Engine\Response;
 use My\Engine\Storage;
+use My\Services\Post;
 
 class PostController {
 
@@ -19,8 +20,7 @@ class PostController {
 
     public function all()
     {
-        return $this->response->html('posts', [
-            'data' => 1324234
-        ]);
+        $posts = Post::requestGet('all');
+        return $this->response->html('posts', $posts);
     }
 }

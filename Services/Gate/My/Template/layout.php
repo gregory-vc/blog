@@ -14,7 +14,6 @@
 <body>
 <a href="/">[ Main ]</a>
 <a href="/login/">[ Login ]</a>
-<a href="/register/">[ Register ]</a>
 <?=$contents?>
 </body>
 </html>

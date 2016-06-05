@@ -10,6 +10,11 @@ class Response {
     public $content;
 
     public function json($data) {
+        $node = getenv('NODE');
+        $data = [
+            'content' => $data,
+            'node' => $node
+        ];
         $this->content = json_encode($data);
         return $this;
     }
