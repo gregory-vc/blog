@@ -37,4 +37,12 @@ class PostController {
         $post = Post::find($post_id);
         return $this->response->json($post);
     }
+
+    public function add()
+    {
+        $post_id = Post::add($this->request->post);
+        return $this->response->json([
+            'post_id' => $post_id
+        ]);
+    }
 }

@@ -12,8 +12,9 @@ class Post extends Service{
     public $connectors;
 
     public $methods = [
-        'all'   => '/posts/',
-        'find'  => '/post/'
+        'all'       => '/posts/',
+        'find'      => '/post/',
+        'post_add'  => '/post/add/'
     ];
 
     public function __construct()

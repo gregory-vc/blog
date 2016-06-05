@@ -19,7 +19,7 @@ class Response {
         $this->template_path = dirname(__FILE__).'/../Template/';
     }
 
-    public function html($name, $data) {
+    public function html($name, $data = []) {
         $controller_template = $this->template_path.$name.'.php';
         $layout_template = $this->template_path.'layout.php';
         ob_start();

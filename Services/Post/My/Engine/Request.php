@@ -29,6 +29,11 @@ class Request {
      */
     public $method;
     
+    /**
+     * @var string post params
+     */
+    public $post;
+    
     public function __construct()
     {
         $this->request_method = $_SERVER['REQUEST_METHOD'];
@@ -37,6 +42,7 @@ class Request {
         parse_str($parameters['query'], $query);
         $this->uri = $parameters['path'];
         $this->params = $query;
+        $this->post = $_POST;
     }
     
     public function getIntParam($name)

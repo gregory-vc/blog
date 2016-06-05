@@ -27,16 +27,27 @@ class PostController {
 
     public function all()
     {
-        $posts = Post::requestGet('all');
+        $posts = Post::get('all');
         return $this->response->html('posts', $posts);
     }
 
     public function get()
     {
         $id = $this->request->getIntParam('id');
-        $post = Post::requestGet('find', [
+        $post = Post::get('find', [
             'id' => $id
         ]);
         return $this->response->html('post', $post);
+    }
+    
+    public function addPage()
+    {
+        return $this->response->html('post_add');
+    }
+
+    public function add()
+    {
+        $post = Post::post('post_add', $this->request->post);
+        return $this->response->html('post_add_success', $post);
     }
 }
