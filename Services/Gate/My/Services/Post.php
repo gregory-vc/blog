@@ -4,7 +4,7 @@ namespace My\Services;
 
 use My\Engine\Service;
 
-class Post extends Service{
+class Post extends Service {
 
     /**
      * @var array connectors

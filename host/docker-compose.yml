@@ -59,11 +59,17 @@
     links:
       - nginx_post_1:post1.blog
       - nginx_post_2:post2.blog
+      - nginx_comment_1:comment1.blog
+      - nginx_comment_2:comment2.blog
     environment:
       - POST_1_HOST=post1.blog
       - POST_1_PORT=80
       - POST_2_HOST=post2.blog
       - POST_2_PORT=80
+      - COMMENT_1_HOST=comment1.blog
+      - COMMENT_1_PORT=80
+      - COMMENT_2_HOST=comment2.blog
+      - COMMENT_2_PORT=80
 
 # nginx for `Gate`
 'nginx_gate':
@@ -154,3 +160,81 @@
       - PHP_HOST=php_post_2
       - NGINX_HOST_TEMPLATE=post2.blog
     volumes: ['./logs/nginx/post_2/:/var/log/nginx']
+
+##########################################
+# Service `Comment 1`
+##########################################
+
+# source code storage for `Comment 1`
+'source_comment_1':
+    build: 'source'
+    container_name: 'source_comment_1'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Comment:/home/gregory/source/']
+
+# php for `Comment 1`
+'php_comment_1':
+    build: 'php'
+    container_name: 'php_comment_1'
+    volumes_from: ['source_comment_1']
+    links: ['mysql_blog']
+    volumes: ['./logs/php/comment_1/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
+      - NODE=comment_1
+
+# nginx for `Comment 1`
+'nginx_comment_1':
+    build: 'nginx'
+    container_name: 'nginx_comment_1'
+    links: ['php_comment_1']
+    volumes_from: ['source_comment_1']
+    ports: ['30004:80']
+    environment:
+      - PHP_HOST=php_comment_1
+      - NGINX_HOST_TEMPLATE=comment1.blog
+    volumes: ['./logs/nginx/comment_1/:/var/log/nginx']
+
+##########################################
+# Service `Comment 2`
+##########################################
+
+# source code storage for `Comment 2`
+'source_comment_2':
+    build: 'source'
+    container_name: 'source_comment_2'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Comment:/home/gregory/source/']
+
+# php for `Comment 2`
+'php_comment_2':
+    build: 'php'
+    container_name: 'php_comment_2'
+    volumes_from: ['source_comment_2']
+    links: ['mysql_blog']
+    volumes: ['./logs/php/comment_2/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
+      - NODE=comment_2
+
+# nginx for `Comment 2`
+'nginx_comment_2':
+    build: 'nginx'
+    container_name: 'nginx_comment_2'
+    links: ['php_comment_2']
+    volumes_from: ['source_comment_2']
+    ports: ['30005:80']
+    environment:
+      - PHP_HOST=php_comment_2
+      - NGINX_HOST_TEMPLATE=comment2.blog
+    volumes: ['./logs/nginx/comment_2/:/var/log/nginx']

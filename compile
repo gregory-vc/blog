@@ -4,3 +4,5 @@ cd host && docker-compose build && docker-compose up -d && docker-compose ps
 docker exec php_gate /bin/bash -c "composer install"
 docker exec php_post_1 /bin/bash -c "composer install"
 docker exec php_post_2 /bin/bash -c "composer install"
+docker exec php_comment_1 /bin/bash -c "composer install"
+docker exec php_comment_1 /bin/bash -c "composer install"

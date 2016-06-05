@@ -5,6 +5,7 @@ namespace My\Controller;
 use My\Engine\Request;
 use My\Engine\Response;
 use My\Engine\Storage;
+use My\Services\Comment;
 use My\Services\Post;
 
 class PostController {
@@ -37,7 +38,13 @@ class PostController {
         $post = Post::get('find', [
             'id' => $id
         ]);
-        return $this->response->html('post', $post);
+        $comments = Comment::get('find', [
+            'post_id' => $id
+        ]);
+        return $this->response->html('post', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
     }
     
     public function addPage()

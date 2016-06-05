@@ -1,0 +1,8 @@
+{
+  "name": "my",
+  "autoload": {
+    "psr-4": {
+      "My\\": "My"
+    }
+  }
+}
