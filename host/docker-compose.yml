@@ -6,7 +6,9 @@
 'phpmyadmin':
     image: 'nazarpc/phpmyadmin:latest'
     container_name: 'phpmyadmin'
-    environment: [ALLOW_ARBITRARY=1]
+    environment:
+      - ALLOW_ARBITRARY=1
+      - URL=phpmyadmin.blog
     restart: always
     links: ['mysql_auth', 'mysql_blog']
     ports: ['30000:80']
@@ -86,7 +88,12 @@
     build: 'php'
     container_name: 'php_post_1'
     volumes_from: ['source_post_1']
+    links: ['mysql_blog']
     volumes: ['./logs/php/post_1/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
 
 # nginx for `Post 1`
 'nginx_post_1':
@@ -119,7 +126,12 @@
     build: 'php'
     container_name: 'php_post_2'
     volumes_from: ['source_post_2']
+    links: ['mysql_blog']
     volumes: ['./logs/php/post_2/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
 
 # nginx for `Post 2`
 'nginx_post_2':
