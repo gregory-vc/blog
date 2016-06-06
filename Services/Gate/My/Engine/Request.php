@@ -39,9 +39,11 @@ class Request {
         $this->request_method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
         $parameters = parse_url($this->uri);
-        parse_str($parameters['query'], $query);
+        if (!empty($parameters['query'])) {
+            parse_str($parameters['query'], $query);
+            $this->params = $query;
+        }
         $this->uri = $parameters['path'];
-        $this->params = $query;
         $this->post = $_POST;
     }
     

@@ -13,7 +13,18 @@
 
 <body>
 <a href="/">[ Main ]</a>
+<?php
+
+if (\My\Services\Auth::isLogin()) {?>
+
+    You login as <?=htmlspecialchars(\My\Services\Auth::getUser()['login'])?>
+    <a href="/logout/">[ Logout ]</a>
+    <?php
+} else {
+?>
 <a href="/login/">[ Login ]</a>
+
+<?php } ?>
 <h1>My blog</h1>
 <?=$contents?>
 </body>

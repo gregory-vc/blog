@@ -16,7 +16,10 @@ class Auth {
             $user = current($user);
             $user['token'] = bin2hex(random_bytes(30));
             User::save($user);
-            return $user['token'];
+            return [
+                'login' => $user['login'],
+                'token' => $user['token']
+            ];
         } else {
             throw new \Exception('Not found user');
         }
