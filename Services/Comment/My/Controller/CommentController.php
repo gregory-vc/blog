@@ -35,9 +35,9 @@ class CommentController {
 
     public function add()
     {
-        $post_id = Post::add($this->request->post);
+        $comment_id = Comment::add($this->request->post);
         return $this->response->json([
-            'post_id' => $post_id
+            'comment_id' => $comment_id
         ]);
     }
 }

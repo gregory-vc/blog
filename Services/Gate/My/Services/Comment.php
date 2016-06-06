@@ -13,6 +13,7 @@ class Comment extends Service {
 
     public $methods = [
         'find'      => '/comments/',
+        'comment_add'  => '/comment/add/'
     ];
 
     public function __construct()

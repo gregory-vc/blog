@@ -44,6 +44,11 @@ class Request {
         $this->params = $query;
         $this->post = $_POST;
     }
+    
+    public function getAllParam()
+    {
+        return $this->params;
+    }
 
     public function getIntParam($name)
     {

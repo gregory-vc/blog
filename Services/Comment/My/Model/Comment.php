@@ -13,6 +13,7 @@ class Comment extends Model{
     public $attributes = [
         'comment_id',
         'name',
-        'text'
+        'text',
+        'post_id'
     ];
 }

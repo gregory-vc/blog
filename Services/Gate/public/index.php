@@ -16,7 +16,7 @@ $router->get('/login', 'AuthController@login');
 $router->get('/404', 'SystemController@notFound');
 
 $router->post('/post/add_request/', 'PostController@add');
-$router->post('/post/comment', 'CommentController@add');
+$router->post('/comment/add_request/', 'CommentController@add');
 $router->post('/login', 'AuthController@auth');
 $router->post('/404', 'SystemController@notFound');
 

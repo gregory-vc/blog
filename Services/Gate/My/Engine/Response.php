@@ -2,6 +2,9 @@
 
 namespace My\Engine;
 
+use My\Engine\Request;
+use My\Engine\Storage;
+
 class Response {
 
     /**
@@ -14,12 +17,19 @@ class Response {
      */
     public $content;
 
+    /**
+     * @var Request
+     */
+    public $request;
+
     public function __construct()
     {
         $this->template_path = dirname(__FILE__).'/../Template/';
+        $this->request = Storage::get('Request');
     }
 
     public function html($name, $data = []) {
+        $params = $this->request->getAllParam();
         $controller_template = $this->template_path.$name.'.php';
         $layout_template = $this->template_path.'layout.php';
         ob_start();
