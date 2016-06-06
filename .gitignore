@@ -3,3 +3,4 @@ host/logs
 Services/Gate/vendor/
 Services/Post/vendor/
 Services/Comment/vendor/
+Services/Auth/vendor/

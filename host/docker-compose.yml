@@ -61,6 +61,9 @@
       - nginx_post_2:post2.blog
       - nginx_comment_1:comment1.blog
       - nginx_comment_2:comment2.blog
+      - nginx_auth_1:auth1.blog
+      - nginx_auth_2:auth2.blog
+      - redis
     environment:
       - POST_1_HOST=post1.blog
       - POST_1_PORT=80
@@ -70,6 +73,10 @@
       - COMMENT_1_PORT=80
       - COMMENT_2_HOST=comment2.blog
       - COMMENT_2_PORT=80
+      - AUTH_1_HOST=auth1.blog
+      - AUTH_1_PORT=80
+      - AUTH_2_HOST=auth2.blog
+      - AUTH_2_PORT=80
 
 # nginx for `Gate`
 'nginx_gate':
@@ -116,7 +123,6 @@
     container_name: 'nginx_post_1'
     links: ['php_post_1']
     volumes_from: ['source_post_1']
-    ports: ['30002:80']
     environment:
       - PHP_HOST=php_post_1
       - NGINX_HOST_TEMPLATE=post1.blog
@@ -155,7 +161,6 @@
     container_name: 'nginx_post_2'
     links: ['php_post_2']
     volumes_from: ['source_post_2']
-    ports: ['30003:80']
     environment:
       - PHP_HOST=php_post_2
       - NGINX_HOST_TEMPLATE=post2.blog
@@ -194,7 +199,6 @@
     container_name: 'nginx_comment_1'
     links: ['php_comment_1']
     volumes_from: ['source_comment_1']
-    ports: ['30004:80']
     environment:
       - PHP_HOST=php_comment_1
       - NGINX_HOST_TEMPLATE=comment1.blog
@@ -233,8 +237,83 @@
     container_name: 'nginx_comment_2'
     links: ['php_comment_2']
     volumes_from: ['source_comment_2']
-    ports: ['30005:80']
     environment:
       - PHP_HOST=php_comment_2
       - NGINX_HOST_TEMPLATE=comment2.blog
     volumes: ['./logs/nginx/comment_2/:/var/log/nginx']
+
+##########################################
+# Service `Auth 1`
+##########################################
+
+# source code storage for `Auth 1`
+'source_auth_1':
+    build: 'source'
+    container_name: 'source_auth_1'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Auth:/home/gregory/source/']
+
+# php for `Auth 1`
+'php_auth_1':
+    build: 'php'
+    container_name: 'php_auth_1'
+    volumes_from: ['source_auth_1']
+    links: ['mysql_auth']
+    volumes: ['./logs/php/auth_1/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_auth;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
+      - NODE=auth_1
+
+# nginx for `Auth 1`
+'nginx_auth_1':
+    build: 'nginx'
+    container_name: 'nginx_auth_1'
+    links: ['php_auth_1']
+    volumes_from: ['source_auth_1']
+    environment:
+      - PHP_HOST=php_auth_1
+      - NGINX_HOST_TEMPLATE=auth1.blog
+    volumes: ['./logs/nginx/auth_1/:/var/log/nginx']
+
+##########################################
+# Service `Auth 2`
+##########################################
+
+# source code storage for `Auth 2`
+'source_auth_2':
+    build: 'source'
+    container_name: 'source_auth_2'
+    environment:
+      - SSH_USER=gregory
+      - SSH_PASSWORD=root
+      - SSH_PORT=22
+    volumes: ['../Services/Auth:/home/gregory/source/']
+
+# php for `Auth 2`
+'php_auth_2':
+    build: 'php'
+    container_name: 'php_auth_2'
+    volumes_from: ['source_auth_2']
+    links: ['mysql_auth']
+    volumes: ['./logs/php/auth_2/:/var/log/dev_php']
+    environment:
+      - PDO_CONNECT=mysql:host=mysql_auth;dbname=blog
+      - PDO_USER=root
+      - PDO_PASSWORD=root
+      - NODE=auth_2
+
+# nginx for `Auth 2`
+'nginx_auth_2':
+    build: 'nginx'
+    container_name: 'nginx_auth_2'
+    links: ['php_auth_2']
+    volumes_from: ['source_auth_2']
+    environment:
+      - PHP_HOST=php_auth_2
+      - NGINX_HOST_TEMPLATE=auth2.blog
+    volumes: ['./logs/nginx/auth_2/:/var/log/nginx']
