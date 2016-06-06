@@ -313,6 +313,7 @@
     container_name: 'nginx_auth_2'
     links: ['php_auth_2']
     volumes_from: ['source_auth_2']
+    ports: ['30002:80']
     environment:
       - PHP_HOST=php_auth_2
       - NGINX_HOST_TEMPLATE=auth2.blog

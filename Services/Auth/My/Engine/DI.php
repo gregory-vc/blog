@@ -3,6 +3,7 @@
 namespace My\Engine;
 
 use My\App;
+use My\Service\Auth;
 
 class DI {
     
@@ -12,5 +13,6 @@ class DI {
         Storage::set('Router', new Router());
         Storage::set('App', new App());
         Storage::set('Response', new Response());
+        Storage::set('Auth', new Auth());
     }
 }

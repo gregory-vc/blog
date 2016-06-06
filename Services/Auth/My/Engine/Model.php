@@ -33,6 +33,56 @@ class Model {
         return $result;
     }
 
+    static public function findBy($data)
+    {
+        $model = new static;
+        $sql = 'SELECT * FROM '.$model->table.' WHERE ';
+        $values = [];
+        foreach ($data as $key => $value) {
+            $sql .= $key.' = ? AND ';
+            $values[] = $value;
+        }
+        $sql = trim($sql, ' AND ');
+        $result = $model->execute($sql, $values);
+        return $result;
+    }
+
+    static public function save($data)
+    {
+        try {
+            $model = new static;
+            $attributes = array_flip($model->attributes);
+            $data = array_filter($data, function ($data) use ($attributes) {
+                return isset($attributes[$data]);
+            }, ARRAY_FILTER_USE_KEY);
+            $sql = 'UPDATE '.$model->table.' SET ';
+            if (empty($data[$model->key])) {
+                throw new \Exception('Not found primary key');
+            }
+            $primary_key = $data[$model->key];
+            unset($data[$model->key]);
+            foreach ($data as $key => $value) {
+                $sql .= ''.$key.' = :'.$key.', ';
+            }
+            $sql = trim($sql, ', ');
+            $sql .= ' WHERE '.$model->key.' = :'.$model->key;
+            $statement = $model->connect->prepare($sql);
+            foreach ($data as $column => $value) {
+                $statement->bindValue(':'.$column, $value);
+            }
+            $statement->bindValue(':'.$model->key, $primary_key);
+            try {
+                $statement->execute();
+                return $model->connect->lastInsertId();
+            } catch(PDOExecption $e) {
+                $model->connect->rollback();
+                return "Error" . $e->getMessage();
+            }
+        } catch( PDOExecption $e ) {
+            return "Error" . $e->getMessage();
+        }
+    }
+
     static public function add($data)
     {
         try {
