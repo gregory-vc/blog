@@ -2,30 +2,11 @@
 
 namespace My\Controller;
 
-use My\Engine\Request;
-use My\Engine\Response;
-use My\Engine\Storage;
 use My\Services\Comment;
 use My\Services\Post;
 
-class PostController {
-
-    /**
-     * @var Response
-     */
-    private $response;
-
-    /**
-     * @var Request
-     */
-    private $request;
+class PostController extends MainController{
     
-    public function __construct()
-    {
-        $this->response = Storage::get('Response');
-        $this->request = Storage::get('Request');
-    }
-
     public function all()
     {
         $posts = Post::get('all');

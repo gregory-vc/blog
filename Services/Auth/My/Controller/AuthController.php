@@ -8,7 +8,7 @@ use My\Engine\Request;
 use My\Model\Comment;
 use My\Model\Post;
 
-class CommentController {
+class AuthController {
 
     /**
      * @var Response

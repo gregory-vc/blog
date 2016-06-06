@@ -8,8 +8,7 @@ use My\Engine\Storage;
 try {
     DI::start();
     $router = Storage::get('Router');
-    $router->get('/comments/', 'CommentController@all');
-    $router->post('/comment/add/', 'CommentController@add');
+    $router->post('/login/', 'AuthController@login');
     $router->get('/404', 'SystemController@notFound');
     $router->post('/404', 'SystemController@notFound');
     $app = Storage::get('App');
