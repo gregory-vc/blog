@@ -12,7 +12,7 @@ class Auth extends Service {
     public $connectors;
 
     public $methods = [
-        'login'      => '/login/',
+        'validate_token'      => '/validate_token/',
     ];
 
     public function __construct()
@@ -27,5 +27,22 @@ class Auth extends Service {
                 'port' => getenv('AUTH_2_PORT')
             ]
         ];
+    }
+    
+    static public function validatePost($post)
+    {
+        if (!empty($post['token'])) {
+            $token = $post['token'];
+            $is_login = Auth::get('validate_token', [
+                'token' => $token
+            ]);
+            if (!empty($is_login['content']['validate_result'])) {
+                return true;
+            } else {
+                throw new \Exception('Token not validate');
+            }
+        } else {
+            throw new \Exception('Token not set');
+        }
     }
 }

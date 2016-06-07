@@ -6,6 +6,7 @@ use My\Engine\Response;
 use My\Engine\Storage;
 use My\Engine\Request;
 use My\Model\Post;
+use My\Services\Auth;
 
 class PostController {
 
@@ -40,14 +41,11 @@ class PostController {
 
     public function add()
     {
-        if (!empty($this->request->post['token'])) {
-            $token = $this->request->post['token'];
+        if (Auth::validatePost($this->request->post)) {
             $post_id = Post::add($this->request->post);
             return $this->response->json([
                 'post_id' => $post_id
             ]);
-        } else {
-            throw new \Exception('Token not set');    
         }
     }
 }

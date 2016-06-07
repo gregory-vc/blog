@@ -46,4 +46,11 @@ class AuthController {
         $result = $this->auth->login($login, $password);
         return $this->response->json($result);
     }
+
+    public function validate()
+    {
+        $token = $this->request->getParam('token');
+        $result = $this->auth->validate($token);
+        return $this->response->json($result);
+    }
 }

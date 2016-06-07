@@ -53,6 +53,15 @@ class Request {
             throw new \Exception('Params '.$name.' not found');
         }
     }
+    
+    public function getParam($name)
+    {
+        if (!empty($this->params[$name])) {
+            return $this->params[$name];
+        } else {
+            throw new \Exception('Params '.$name.' not found');
+        }
+    }
 
     public function setRoute($route)
     {
