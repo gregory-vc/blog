@@ -40,9 +40,14 @@ class PostController {
 
     public function add()
     {
-        $post_id = Post::add($this->request->post);
-        return $this->response->json([
-            'post_id' => $post_id
-        ]);
+        if (!empty($this->request->post['token'])) {
+            $token = $this->request->post['token'];
+            $post_id = Post::add($this->request->post);
+            return $this->response->json([
+                'post_id' => $post_id
+            ]);
+        } else {
+            throw new \Exception('Token not set');    
+        }
     }
 }

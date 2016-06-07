@@ -109,13 +109,21 @@
     build: 'php'
     container_name: 'php_post_1'
     volumes_from: ['source_post_1']
-    links: ['mysql_blog']
     volumes: ['./logs/php/post_1/:/var/log/dev_php']
     environment:
       - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
       - PDO_USER=root
       - PDO_PASSWORD=root
       - NODE=post_1
+      - AUTH_1_HOST=auth1.blog
+      - AUTH_1_PORT=80
+      - AUTH_2_HOST=auth2.blog
+      - AUTH_2_PORT=80
+    links:
+      - mysql_blog
+      - nginx_auth_1:auth1.blog
+      - nginx_auth_2:auth2.blog
+
 
 # nginx for `Post 1`
 'nginx_post_1':
@@ -147,13 +155,20 @@
     build: 'php'
     container_name: 'php_post_2'
     volumes_from: ['source_post_2']
-    links: ['mysql_blog']
     volumes: ['./logs/php/post_2/:/var/log/dev_php']
     environment:
       - PDO_CONNECT=mysql:host=mysql_blog;dbname=blog
       - PDO_USER=root
       - PDO_PASSWORD=root
       - NODE=post_2
+      - AUTH_1_HOST=auth1.blog
+      - AUTH_1_PORT=80
+      - AUTH_2_HOST=auth2.blog
+      - AUTH_2_PORT=80
+    links:
+      - mysql_blog
+      - nginx_auth_1:auth1.blog
+      - nginx_auth_2:auth2.blog
 
 # nginx for `Post 2`
 'nginx_post_2':

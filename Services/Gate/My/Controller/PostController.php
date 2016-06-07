@@ -2,6 +2,8 @@
 
 namespace My\Controller;
 
+use My\Engine\Session;
+use My\Services\Auth;
 use My\Services\Comment;
 use My\Services\Post;
 
@@ -35,7 +37,15 @@ class PostController extends MainController {
 
     public function add()
     {
-        $post = Post::post('post_add', $this->request->post);
-        return $this->response->html('post_add_success', $post);
+        if (Auth::isLogin()) {
+            $data = $this->request->post;
+            $data['token'] = Auth::getUser()['token'];
+            $post = Post::post('post_add', $data);
+            print_r($post);
+            die();
+            return $this->response->html('post_add_success', $post);
+        } else {
+            throw new \Exception('You must login');
+        }
     }
 }
