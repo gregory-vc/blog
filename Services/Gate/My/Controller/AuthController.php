@@ -5,7 +5,7 @@ namespace My\Controller;
 use My\Services\Auth;
 use My\Engine\Redirect;
 
-class AuthController extends MainController{
+class AuthController extends MainController {
 
     public function login()
     {
@@ -19,6 +19,12 @@ class AuthController extends MainController{
             throw new \Exception('Not found user');
         }
         $this->session->set('user', $token['content']);
+        Redirect::go('/');
+    }
+    
+    public function logout()
+    {
+        $this->session->clean();
         Redirect::go('/');
     }
 }

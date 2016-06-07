@@ -2,7 +2,7 @@
 
 namespace My\Controller;
 
-class SystemController extends MainController{
+class SystemController extends MainController {
 
     public function notFound()
     {

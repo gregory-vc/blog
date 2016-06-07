@@ -31,4 +31,9 @@ class Session {
     {
         return $_SESSION[$key];
     }
+
+    public function clean()
+    {
+        session_unset();
+    }
 }

@@ -5,7 +5,7 @@ namespace My\Controller;
 use My\Services\Comment;
 use My\Engine\Redirect;
 
-class CommentController extends MainController{
+class CommentController extends MainController {
 
     public function add()
     {

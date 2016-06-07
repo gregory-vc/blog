@@ -5,7 +5,7 @@ namespace My\Controller;
 use My\Services\Comment;
 use My\Services\Post;
 
-class PostController extends MainController{
+class PostController extends MainController {
     
     public function all()
     {
