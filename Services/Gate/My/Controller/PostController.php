@@ -41,8 +41,6 @@ class PostController extends MainController {
             $data = $this->request->post;
             $data['token'] = Auth::getUser()['token'];
             $post = Post::post('post_add', $data);
-            print_r($post);
-            die();
             return $this->response->html('post_add_success', $post);
         } else {
             throw new \Exception('You must login');
