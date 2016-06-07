@@ -1,6 +1,6 @@
 ## Docker micro micro micro blog
 
-####Установка Docker'a:
+####Install Docker:
 ```
 wget -qO- https://get.docker.com/ | sh
 sudo usermod -aG docker user
