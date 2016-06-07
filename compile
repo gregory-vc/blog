@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd host && docker-compose build && docker-compose up -d && docker-compose ps
+cd host && docker-compose up -d && docker-compose ps
 docker cp dump/blog.sql mysql_blog:/blog.sql
 docker cp dump/blog_auth.sql mysql_auth:/blog_auth.sql
 docker exec mysql_auth /bin/bash -c "mysql -u root --password=root --execute='DROP DATABASE IF EXISTS blog'"
