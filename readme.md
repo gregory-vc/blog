@@ -12,6 +12,8 @@ sudo pip install docker-compose
 ```
 chmod 744 compile
 ./compile
+chmod 744 upload_db
+./upload_db
 ```
 
 #### Run
