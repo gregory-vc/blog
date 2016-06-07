@@ -11,7 +11,6 @@ try {
     $router->post('/login/', 'AuthController@login');
     $router->get('/validate_token/', 'AuthController@validate');
     $router->get('/404', 'SystemController@notFound');
-    $router->post('/404', 'SystemController@notFound');
     $app = Storage::get('App');
     $app->run();
 } catch (\Exception $e) {

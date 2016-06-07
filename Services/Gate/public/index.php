@@ -19,7 +19,6 @@ $router->get('/404', 'SystemController@notFound');
 $router->post('/post/add_request/', 'PostController@add');
 $router->post('/comment/add_request/', 'CommentController@add');
 $router->post('/login/send_request/', 'AuthController@auth');
-$router->post('/404', 'SystemController@notFound');
 
 $app = Storage::get('App');
 
