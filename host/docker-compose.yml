@@ -42,7 +42,7 @@
 
 # source code storage for `gate`
 'source_gate':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_gate'
     environment:
       - SSH_USER=gregory
@@ -52,7 +52,7 @@
 
 # php for `Gate`
 'php_gate':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_gate'
     volumes_from: ['source_gate']
     volumes: ['./logs/php/gate/:/var/log/dev_php']
@@ -80,7 +80,7 @@
 
 # nginx for `Gate`
 'nginx_gate':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_gate'
     links: ['php_gate']
     volumes_from: ['source_gate']
@@ -96,7 +96,7 @@
 
 # source code storage for `Post 1`
 'source_post_1':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_post_1'
     environment:
       - SSH_USER=gregory
@@ -106,7 +106,7 @@
 
 # php for `Post 1`
 'php_post_1':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_post_1'
     volumes_from: ['source_post_1']
     volumes: ['./logs/php/post_1/:/var/log/dev_php']
@@ -127,7 +127,7 @@
 
 # nginx for `Post 1`
 'nginx_post_1':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_post_1'
     links: ['php_post_1']
     volumes_from: ['source_post_1']
@@ -142,7 +142,7 @@
 
 # source code storage for `Post 2`
 'source_post_2':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_post_2'
     environment:
       - SSH_USER=gregory
@@ -152,7 +152,7 @@
 
 # php for `Post 2`
 'php_post_2':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_post_2'
     volumes_from: ['source_post_2']
     volumes: ['./logs/php/post_2/:/var/log/dev_php']
@@ -172,7 +172,7 @@
 
 # nginx for `Post 2`
 'nginx_post_2':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_post_2'
     links: ['php_post_2']
     volumes_from: ['source_post_2']
@@ -187,7 +187,7 @@
 
 # source code storage for `Comment 1`
 'source_comment_1':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_comment_1'
     environment:
       - SSH_USER=gregory
@@ -197,7 +197,7 @@
 
 # php for `Comment 1`
 'php_comment_1':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_comment_1'
     volumes_from: ['source_comment_1']
     links: ['mysql_blog']
@@ -210,7 +210,7 @@
 
 # nginx for `Comment 1`
 'nginx_comment_1':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_comment_1'
     links: ['php_comment_1']
     volumes_from: ['source_comment_1']
@@ -225,7 +225,7 @@
 
 # source code storage for `Comment 2`
 'source_comment_2':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_comment_2'
     environment:
       - SSH_USER=gregory
@@ -235,7 +235,7 @@
 
 # php for `Comment 2`
 'php_comment_2':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_comment_2'
     volumes_from: ['source_comment_2']
     links: ['mysql_blog']
@@ -248,7 +248,7 @@
 
 # nginx for `Comment 2`
 'nginx_comment_2':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_comment_2'
     links: ['php_comment_2']
     volumes_from: ['source_comment_2']
@@ -263,7 +263,7 @@
 
 # source code storage for `Auth 1`
 'source_auth_1':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_auth_1'
     environment:
       - SSH_USER=gregory
@@ -273,7 +273,7 @@
 
 # php for `Auth 1`
 'php_auth_1':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_auth_1'
     volumes_from: ['source_auth_1']
     links: ['mysql_auth']
@@ -286,7 +286,7 @@
 
 # nginx for `Auth 1`
 'nginx_auth_1':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_auth_1'
     links: ['php_auth_1']
     volumes_from: ['source_auth_1']
@@ -301,7 +301,7 @@
 
 # source code storage for `Auth 2`
 'source_auth_2':
-    build: 'source'
+    image: 'tattoor/blog_source'
     container_name: 'source_auth_2'
     environment:
       - SSH_USER=gregory
@@ -311,7 +311,7 @@
 
 # php for `Auth 2`
 'php_auth_2':
-    build: 'php'
+    image: 'tattoor/blog_php'
     container_name: 'php_auth_2'
     volumes_from: ['source_auth_2']
     links: ['mysql_auth']
@@ -324,7 +324,7 @@
 
 # nginx for `Auth 2`
 'nginx_auth_2':
-    build: 'nginx'
+    image: 'tattoor/blog_nginx'
     container_name: 'nginx_auth_2'
     links: ['php_auth_2']
     volumes_from: ['source_auth_2']
