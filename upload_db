@@ -1,7 +1,7 @@
 #!/bin/bash
 
-docker cp dump/blog.sql mysql_blog:/blog.sql
-docker cp dump/blog_auth.sql mysql_auth:/blog_auth.sql
+docker cp host/dump/blog.sql mysql_blog:/blog.sql
+docker cp host/dump/blog_auth.sql mysql_auth:/blog_auth.sql
 docker exec mysql_auth /bin/bash -c "mysql -u root --password=root --execute='DROP DATABASE IF EXISTS blog'"
 docker exec mysql_blog /bin/bash -c "mysql -u root --password=root --execute='DROP DATABASE IF EXISTS blog'"
 docker exec mysql_auth /bin/bash -c "mysql -u root --password=root --execute='CREATE DATABASE blog CHARACTER SET utf8 COLLATE utf8_unicode_ci'"
